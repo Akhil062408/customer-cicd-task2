@@ -1,0 +1,14 @@
+{
+  "name": "customer-app",
+  "version": "1.0.0",
+  "description": "Multi-environment customer application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mysql2": "^3.11.5"
+  }
+}
