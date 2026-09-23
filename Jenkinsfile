@@ -213,7 +213,7 @@ APP ENVIRONMENT   : ${env.APP_ENV}
                 echo "Checking out branch: ${env.DEPLOY_BRANCH}"
 
                 git branch: env.DEPLOY_BRANCH,
-                    url: 'https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git'
+                    url: 'https://github.com/Akhil062408/customer-cicd-task2.git'
 
                 bat 'git branch --show-current'
 
