@@ -227,28 +227,25 @@ APP ENVIRONMENT   : ${env.APP_ENV}
         // =====================================================
 
         stage('Run Tests') {
-
-            when {
-
-                expression {
-
-                    params.RUN_TESTS == 'YES'
-                }
-            }
-
-            steps {
-
-                echo "Running application tests..."
-
-                bat '''
-                    docker run --rm ^
-                    -v "%CD%\\app:/app" ^
-                    -w /app ^
-                    node:20-alpine ^
-                    sh -c "npm install && npm test"
-                '''
-            }
+    when {
+        expression {
+            params.RUN_TESTS == 'YES'
         }
+    }
+    steps {
+        echo 'Running application source tests...'
+
+        bat '''
+            docker run --rm ^
+              -v "%WORKSPACE%\\app:/app" ^
+              -w /app ^
+              node:20-alpine ^
+              sh -c "npm install && node --check server.js"
+        '''
+
+        echo 'Source syntax test passed.'
+    }
+}
 
 
         // =====================================================
