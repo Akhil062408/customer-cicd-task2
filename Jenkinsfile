@@ -354,7 +354,7 @@ APP ENVIRONMENT   : ${env.APP_ENV}
 
                     echo "Database container started."
 
-                    timeout /t 20 /nobreak
+                    bat 'timeout /t 20 /nobreak'
                 }
             }
         }
