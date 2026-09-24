@@ -322,18 +322,12 @@ APP ENVIRONMENT   : ${env.APP_ENV}
         // =====================================================
 
         stage('Deploy Database') {
-
             steps {
-
-                withCredentials(
-                    [
-                        usernamePassword(
-                            credentialsId: env.DB_CREDENTIALS_ID,
-                            usernameVariable: 'DB_USER',
-                            passwordVariable: 'DB_PASSWORD'
-                        )
-                    ]
-                ) {
+                withCredentials([usernamePassword(
+                    credentialsId: 'customer-db-credentials',
+                    usernameVariable: 'DB_USER',
+                    passwordVariable: 'DB_PASSWORD'
+                )]) {
 
                     bat """
                         docker rm -f ${env.DB_CONTAINER} >nul 2>&1 || exit /b 0
@@ -352,7 +346,9 @@ APP ENVIRONMENT   : ${env.APP_ENV}
 
                     echo "Database container started."
 
-                    bat 'timeout /t 20 /nobreak'
+                    bat 'powershell -NoProfile -Command "Start-Sleep -Seconds 20"'
+
+                    echo "Database startup wait completed."
                 }
             }
         }
