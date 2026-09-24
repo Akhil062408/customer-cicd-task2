@@ -346,6 +346,7 @@ APP ENVIRONMENT   : ${env.APP_ENV}
                         -e MYSQL_USER=%DB_USER% ^
                         -e MYSQL_PASSWORD=%DB_PASSWORD% ^
                         -v ${env.DB_VOLUME}:/var/lib/mysql ^
+                        -v "%WORKSPACE%\\db\\init.sql:/docker-entrypoint-initdb.d/init.sql:ro" ^
                         mysql:8.4
                     """
 
