@@ -89,30 +89,37 @@ app.get("/customers", async (req, res) => {
 });
 
 app.get("/customers/search", async (req, res) => {
+    const search = (req.query.q || "").trim();
 
-    const search = req.query.q || "";
+    if (!search) {
+        return res.status(400).json({
+            error: "Search query 'q' is required"
+        });
+    }
 
     try {
-
         const db = await getConnection();
 
         const [rows] = await db.execute(
-            "SELECT id, name, email FROM customers WHERE name LIKE ? OR email LIKE ?",
+            `SELECT id, name, email
+             FROM customers
+             WHERE name LIKE ? OR email LIKE ?
+             ORDER BY id`,
             [`%${search}%`, `%${search}%`]
         );
 
         await db.end();
 
-        res.json(rows);
-
+        res.json({
+            query: search,
+            count: rows.length,
+            customers: rows
+        });
     } catch (error) {
-
         res.status(500).json({
             error: error.code || error.message
         });
-
     }
-
 });
 
 app.listen(PORT, "0.0.0.0", () => {
